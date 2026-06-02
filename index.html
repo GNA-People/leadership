@@ -21,15 +21,18 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
 
+        html, body { min-height: 100%; }
+
         body {
             background-color: var(--bg);
             color: var(--text);
             line-height: 1.6;
-            padding: 20px;
+            padding: clamp(12px, 3vw, 40px);
         }
 
         .container {
-            max-width: 800px;
+            width: 100%;
+            max-width: 1600px;
             margin: 0 auto;
         }
 
@@ -43,8 +46,8 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
-        header h1 { font-size: 1.5rem; margin-bottom: 5px; }
-        header p { font-size: 0.9rem; opacity: 0.9; }
+        header h1 { font-size: clamp(1.5rem, 3vw, 2.4rem); margin-bottom: 5px; }
+        header p { font-size: clamp(0.9rem, 1.5vw, 1.1rem); opacity: 0.9; }
 
         /* 탭 내비게이션 */
         .nav-tabs {
@@ -90,7 +93,7 @@
         /* 핵심 복기 스타일 */
         .ioc-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 15px;
             margin-bottom: 25px;
         }
@@ -240,7 +243,7 @@
         }
         .summary-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 15px;
             background: #eff6ff;
             padding: 24px;
@@ -264,6 +267,27 @@
         }
         .summary-card h4 { color: #1e3a8a; font-size: 1.05rem; margin-bottom: 8px; }
         .summary-card p { font-size: 0.88rem; color: #475569; }
+
+        /* 셀프 점검: 넓은 화면에서 여러 열로 펼침 */
+        #part2 .quiz-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 10px 28px;
+        }
+        #part2 .result-bar { grid-column: 1 / -1; position: static; }
+
+        /* 모바일 대응 */
+        @media (max-width: 600px) {
+            .nav-tabs { gap: 6px; }
+            .tab-btn { padding: 10px 6px; font-size: 0.85rem; }
+            .tab-content { padding: 16px; }
+            .result-bar {
+                flex-direction: column;
+                gap: 8px;
+                align-items: flex-start;
+            }
+            .status-badge { font-size: 0.78rem; }
+        }
     </style>
 </head>
 <body>
@@ -375,6 +399,7 @@
 
     <!-- 탭 2: 셀프 점검 체크리스트 (퀴즈) -->
     <div id="part2" class="tab-content">
+        <div class="quiz-grid">
         <!-- 1. Integrity -->
         <div class="quiz-section">
             <div class="quiz-section-title">1. Integrity · 진실성 (피드백)</div>
@@ -426,6 +451,8 @@
             <div class="quiz-item"><input type="checkbox" id="q21" onchange="calcScore()"><label for="q21">그 행동을 지난 3개월간 실제로 지속했다.</label></div>
             <div class="quiz-item"><input type="checkbox" id="q22" onchange="calcScore()"><label for="q22">선언 당시보다 지금의 내 리더십이 나아졌다고 느낀다.</label></div>
         </div>
+
+        </div><!-- /quiz-grid -->
 
         <!-- 결과 점수판 (고정형) -->
         <div class="result-bar">
