@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playio Leadership Program - 3개월 리마인드 점검</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+            color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 { font-size: 1.5rem; margin-bottom: 5px; }
+        header p { font-size: 0.9rem; opacity: 0.9; }
+
+        /* 탭 내비게이션 */
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            background: #e2e8f0;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* 콘텐츠 영역 */
+        .tab-content {
+            display: none;
+            background: var(--card-bg);
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 핵심 복기 스타일 */
+        .ioc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .ioc-card {
+            border: 1px solid var(--border);
+            padding: 15px;
+            border-radius: 8px;
+            background: #f8fafc;
+        }
+
+        .ioc-title { font-weight: bold; font-size: 1.1rem; color: var(--primary); margin-bottom: 5px;}
+        
+        .tool-box {
+            background: #f1f5f9;
+            border-left: 4px solid #94a3b8;
+            padding: 12px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.9rem;
+        }
+
+        .info-block {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border);
+        }
+        .info-block h4 { margin-bottom: 8px; color: #334155;}
+
+        /* 체크리스트 퀴즈 스타일 */
+        .quiz-section {
+            margin-bottom: 25px;
+        }
+        .quiz-section-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #1e3a8a;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 5px;
+        }
+
+        .quiz-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .quiz-item:hover { background: #f1f5f9; }
+        .quiz-item input { transform: scale(1.2); margin-top: 5px; cursor: pointer; }
+        .quiz-item label { cursor: pointer; width: 100%; font-size: 0.95rem; }
+
+        /* 결과 고정 바 */
+        .result-bar {
+            position: sticky;
+            bottom: 0;
+            background: #1e293b;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
+        }
+
+        .score-text { font-size: 1.1rem; font-weight: bold; }
+        .status-badge {
+            background: var(--primary);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .footer-quote {
+            text-align: center;
+            margin-top: 30px;
+            font-style: italic;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        /* 위임 7단계 그래프 */
+        .empower-chart {
+            display: flex;
+            align-items: flex-end;
+            gap: 6px;
+            margin-top: 18px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+        .bar-item {
+            flex: 1;
+            min-width: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .bar-num {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: #fff;
+            font-weight: bold;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 6px;
+        }
+        .bar {
+            width: 100%;
+            border: 1px solid #93c5fd;
+            border-radius: 8px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 8px 4px;
+            box-sizing: border-box;
+        }
+        .bar-label {
+            font-size: 0.72rem;
+            text-align: center;
+            line-height: 1.3;
+            margin-top: 6px;
+            color: #1e293b;
+        }
+        .bar-label span { color: #64748b; font-size: 0.68rem; }
+
+        /* 하단 요약 카드 */
+        .summary-banner {
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+            color: #fff;
+            text-align: center;
+            font-weight: bold;
+            padding: 14px;
+            border-radius: 10px 10px 0 0;
+            margin-top: 30px;
+            font-size: 1rem;
+        }
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            background: #eff6ff;
+            padding: 24px;
+            border-radius: 0 0 12px 12px;
+        }
+        .summary-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 18px;
+        }
+        .summary-num {
+            display: inline-block;
+            background: var(--primary);
+            color: #fff;
+            font-weight: bold;
+            font-size: 0.8rem;
+            padding: 4px 9px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+        .summary-card h4 { color: #1e3a8a; font-size: 1.05rem; margin-bottom: 8px; }
+        .summary-card p { font-size: 0.88rem; color: #475569; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Playio Leadership Program</h1>
+        <p>IOC + SDT 기반 3개월 리마인드 셀프 점검</p>
+    </header>
+
+    <!-- 상단 탭 버튼 -->
+    <div class="nav-tabs">
+        <button class="tab-btn active" onclick="openTab('part1')">PART 1. 핵심 복기</button>
+        <button class="tab-btn" onclick="openTab('part2')">PART 2. 셀프 점검</button>
+    </div>
+
+    <!-- 탭 1: 핵심 복기 -->
+    <div id="part1" class="tab-content active">
+        <div class="ioc-grid">
+            <div class="ioc-card">
+                <div class="ioc-title">I · Integrity (진실성)</div>
+                <p>불편한 진실을 피하지 않고 사실대로 말하는가?</p>
+                <small style="color: #64748b;">⚙️ 도구: SBI 피드백</small>
+            </div>
+            <div class="ioc-card">
+                <div class="ioc-title">O · Ownership (주인의식)</div>
+                <p>담당자가 있어도 내 책임이라 느끼는가?</p>
+                <small style="color: #64748b;">⚙️ 도구: 7단계 위임</small>
+            </div>
+            <div class="ioc-card">
+                <div class="ioc-title">C · Courage (용기)</div>
+                <p>미움받을 각오로 필요한 말을 꺼내는가?</p>
+                <small style="color: #64748b;">⚙️ 도구: 첫 문장 패턴</small>
+            </div>
+        </div>
+
+        <blockquote>
+            <strong>※ 목 적 :</strong> IOC는 리더십의 '기술'이 아니라 '태도'입니다. "안다(Knowing)와 한다(Doing) 사이의 격차를 줄이는 것"이 본 과정의 핵심 목적입니다.
+        </blockquote>
+
+        <div class="tool-box">
+            <strong>🗣️ SBI 피드백 (Situation · Behavior · Impact)</strong><br>
+            S (언제·어디서 사실) → B (관찰된 행동만 판단 배제) → I (나/팀/고객에게 미친 영향)<br>
+            <span style="color:#64748b;">예) "어제 미팅에서(S) 자료를 안 가져와서(B) 바이어의 신뢰도가 떨어졌어(I)"</span>
+        </div>
+
+        <div class="tool-box">
+            <strong>💬 불편한 대화 첫 문장 패턴</strong><br>
+            관찰 (사실 그대로) + 영향 (결과/문제) + 요청 (구체적 제안)<br>
+            <span style="color:#64748b;">예) "지난 스프린트 데모에서(관찰) QA 버그가 7건 남았어(영향). 이번 주는 2건 이하로 줄이는 방법을 같이 정하자(요청)"</span>
+        </div>
+
+        <div class="tool-box">
+            <strong>💡 SDT 기반 리더십 액션 (Self-Determination Theory)</strong><br>
+            유능감(Competence) · 자율성(Autonomy) · 관계성(Relatedness) → 세 가지 욕구를 채울 때 내적 동기가 작동합니다.<br>
+            <span style="color:#64748b;">예) 유능감 = 성장·숙련 지원 / 자율성 = 통제감 부여 / 관계성 = 심리적 안전감 형성</span>
+        </div>
+
+        <div class="tool-box">
+            <strong>📋 위임의 7단계 (7 Levels of Empowerment)</strong><br>
+            ① Tell → ② Sell → ③ Consult → ④ Agree → ⑤ Advise → ⑥ Inquire → ⑦ Delegate<br>
+            <span style="color:#64748b;">* 3단계(Consult)부터 팀원의 자율성이 작동합니다. 위임은 방치가 아니라 성장 투자입니다.</span>
+
+            <div class="empower-chart">
+                <div class="bar-item">
+                    <div class="bar-num">1</div>
+                    <div class="bar" style="height:60px; background:#f1f5f9; border-color:#cbd5e1;"></div>
+                    <div class="bar-label"><strong>Tell</strong><br>지시<br><span>내가 결정하고 지시한다</span></div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar-num">2</div>
+                    <div class="bar" style="height:90px; background:#dbeafe;"></div>
+                    <div class="bar-label"><strong>Sell</strong><br>설득<br><span>내가 결정하고 이유를 설명한다</span></div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar-num">3</div>
+                    <div class="bar" style="height:120px; background:#bfdbfe;"></div>
+                    <div class="bar-label"><strong>Consult</strong><br>자문<br><span>결정 전에 의견을 듣는다</span></div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar-num">4</div>
+                    <div class="bar" style="height:150px; background:#93c5fd;"></div>
+                    <div class="bar-label"><strong>Agree</strong><br>합의<br><span>함께 논의하여 결정한다</span></div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar-num">5</div>
+                    <div class="bar" style="height:180px; background:#60a5fa;"></div>
+                    <div class="bar-label"><strong>Advise</strong><br>조언<br><span>팀원이 결정하고 내가 조언한다</span></div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar-num">6</div>
+                    <div class="bar" style="height:210px; background:#3b82f6;"></div>
+                    <div class="bar-label"><strong>Inquire</strong><br>확인<br><span>팀원이 결정하고 사후 보고한다</span></div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar-num">7</div>
+                    <div class="bar" style="height:240px; background:#2563eb;"></div>
+                    <div class="bar-label"><strong>Delegate</strong><br>위임<br><span>팀원이 완전히 자율 결정한다</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tool-box">
+            <strong>🤖 AI 시대 리더의 역할</strong><br>
+            반복·정리·초안 업무는 AI로 자동화 → 확보한 시간을 판단·방향 설정·관계 형성(Relationship)에 재투자<br>
+            <span style="color:#64748b;">예) AI가 할 수 없는 책임 있는 결정과 동기부여 영역에 집중하십시오.</span>
+        </div>
+    </div>
+
+    <!-- 탭 2: 셀프 점검 체크리스트 (퀴즈) -->
+    <div id="part2" class="tab-content">
+        <!-- 1. Integrity -->
+        <div class="quiz-section">
+            <div class="quiz-section-title">1. Integrity · 진실성 (피드백)</div>
+            <div class="quiz-item"><input type="checkbox" id="q1" onchange="calcScore()"><label for="q1">최근 한 달, 팀원에게 정기적으로 피드백을 주었다.</label></div>
+            <div class="quiz-item"><input type="checkbox" id="q2" onchange="calcScore()"><label for="q2">칭찬뿐 아니라 교정 피드백(불편한 진실)도 전달했다.</label></div>
+            <div class="quiz-item"><input type="checkbox" id="q3" onchange="calcScore()"><label for="q3">"열심히 안 해" 같은 모호한 평가 대신 S·B·I로 사실을 분리해 말했다.</label></div>
+            <div class="quiz-item"><input type="checkbox" id="q4" onchange="calcScore()"><label for="q4">팀원이 나보다 잘하는 영역을 인정하고 표현했다.</label></div>
+        </div>
+
+        <!-- 2. Ownership -->
+        <div class="quiz-section">
+            <div class="quiz-section-title">2. Ownership · 주인의식 (위임)</div>
+            <div class="quiz-item"><input type="checkbox" id="q5" onchange="calcScore()"><label for="q5">"내가 하면 빠른데"를 참고, 맡길 일을 실제로 위임했다.</label></div>
+            <div class="quiz-item"><input type="checkbox" id="q6" onchange="calcScore()"><label for="q6">주요 업무 수준을 1~2단계(지시)에서 3단계(Consult) 이상으로 올렸다.</label></div>
+            <div class="quiz-item"><input type="checkbox" id="q7" onchange="calcScore()"><label for="q7">위임 시 권한·자원·보고주기 등 체크리스트 항목을 함께 제공했다 (방치X).</label></div>
+            <div class="quiz-item"><input type="checkbox" id="q8" onchange="calcScore()"><label for="q8">결과가 안 좋아도 "내 책임"으로 정의하고 학습 기회로 설계했다.</label></div>
+        </div>
+
+        <!-- 3. Courage -->
+        <div class="quiz-section">
+            <div class="quiz-section-title">3. Courage · 용기 (불편한 대화)</div>
+            <div class="quiz-item"><input type="checkbox" id="q9" onchange="calcScore()"><label for="q9">미루던 불편한 대화를 "때가 아니다"라는 핑계 없이 꺼냈다.</label></div>
+            <div class="quiz-item"><input type="checkbox" id="q10" onchange="calcScore()"><label for="q10">관찰+영향+요청 구조로 대화 첫 문장을 열었다.</label></div>
+            <div class="quiz-item"><input type="checkbox" id="q11" onchange="calcScore()"><label for="q11">감정이나 기억이 흐려지기 전(24시간 내)에 피드백을 전달했다.</label></div>
+            <div class="quiz-item"><input type="checkbox" id="q12" onchange="calcScore()"><label for="q12">나보다 뛰어난 능력이나 고연차를 가진 팀원에게도 명확한 방향을 제시했다.</label></div>
+        </div>
+
+        <!-- 4. 리드 -> 리더십 전환 -->
+        <div class="quiz-section">
+            <div class="quiz-section-title">4. 리드 → 리더십 전환</div>
+            <div class="quiz-item"><input type="checkbox" id="q13" onchange="calcScore()"><label for="q13">지시(What)보다 맥락(Why)을 설명하는 비중이 늘었다.</label></div>
+            <div class="quiz-item"><input type="checkbox" id="q14" onchange="calcScore()"><label for="q14">팀원이 스스로 결정할 기준(가드레일: 예산·전결 등)을 제공했다.</label></div>
+            <div class="quiz-item"><input type="checkbox" id="q15" onchange="calcScore()"><label for="q15">하나하나 확인(통제)하는 것보다 환경을 설계하는 데 시간을 썼다.</label></div>
+            <div class="quiz-item"><input type="checkbox" id="q16" onchange="calcScore()"><label for="q16">1:1 미팅을 정기적으로 운영했다 (Progress · Plan · Problems).</label></div>
+        </div>
+
+        <!-- 5. AI 시대 리더 역할 -->
+        <div class="quiz-section">
+            <div class="quiz-section-title">5. AI 시대 리더 역할</div>
+            <div class="quiz-item"><input type="checkbox" id="q17" onchange="calcScore()"><label for="q17">반복·정리·초안 업무를 AI로 자동화해 업무 시간을 확보했다.</label></div>
+            <div class="quiz-item"><input type="checkbox" id="q18" onchange="calcScore()"><label for="q18">확보한 시간을 판단·방향설정·관계형성에 재투자했다.</label></div>
+            <div class="quiz-item"><input type="checkbox" id="q19" onchange="calcScore()"><label for="q19">AI가 못 하는 영역(책임 있는 결정, 동기부여)에 더욱 집중했다.</label></div>
+        </div>
+
+        <!-- 6. 3월 실행 계약 점검 -->
+        <div class="quiz-section">
+            <div class="quiz-section-title">6. 3월 실행 계약 점검</div>
+            <div class="quiz-item"><input type="checkbox" id="q20" onchange="calcScore()"><label for="q20">워크숍에서 "오늘부터 1가지"로 선언한 행동을 명확히 기억하고 있다.</label></div>
+            <div class="quiz-item"><input type="checkbox" id="q21" onchange="calcScore()"><label for="q21">그 행동을 지난 3개월간 실제로 지속했다.</label></div>
+            <div class="quiz-item"><input type="checkbox" id="q22" onchange="calcScore()"><label for="q22">선언 당시보다 지금의 내 리더십이 나아졌다고 느낀다.</label></div>
+        </div>
+
+        <!-- 결과 점수판 (고정형) -->
+        <div class="result-bar">
+            <div class="score-text">체크 개수: <span id="score-count">0</span> / 22</div>
+            <div class="status-badge" id="status-text">1가지부터 다시 시작 (~11)</div>
+        </div>
+    </div>
+
+    <div class="summary-banner">"리더십은 타고나는 게 아니라 매일의 선택으로 만들어집니다"</div>
+    <div class="summary-grid">
+        <div class="summary-card">
+            <span class="summary-num">01</span>
+            <h4>리드가 아닌 리더십을</h4>
+            <p>지시하고 통제하는 것이 아니라, 팀원이 스스로 움직이게 만드는 영향력입니다.</p>
+        </div>
+        <div class="summary-card">
+            <span class="summary-num">02</span>
+            <h4>IOC는 기술이 아닌 태도</h4>
+            <p>Integrity(진실성) · Ownership(주인의식) · Courage(용기)가 리더의 그릇을 만듭니다.</p>
+        </div>
+        <div class="summary-card">
+            <span class="summary-num">03</span>
+            <h4>AI 시대일수록 사람을 읽는 리더가 강하다</h4>
+            <p>AI가 할 수 없는 판단과 관계(Relationship)에 집중하십시오.</p>
+        </div>
+    </div>
+
+    <p class="footer-quote">"리더십은 타고나는 게 아니라 매일의 선택으로 만들어집니다."</p>
+</div>
+
+<script>
+    // 탭 전환 기능
+    function openTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(content => {
+            content.classList.remove('active');
+        });
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+
+        document.getElementById(tabId).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+
+    // 점수 계산 및 상태 업데이트 기능
+    function calcScore() {
+        const totalCheckboxes = document.querySelectorAll('#part2 input[type="checkbox"]').length;
+        const checkedCount = document.querySelectorAll('#part2 input[type="checkbox"]:checked').length;
+        
+        document.getElementById('score-count').innerText = checkedCount;
+
+        const statusBadge = document.getElementById('status-text');
+        
+        if (checkedCount >= 18) {
+            statusBadge.innerText = "🎉 잘 정착함 (18+)";
+            statusBadge.style.background = "#22c55e"; // 초록색
+        } else if (checkedCount >= 12) {
+            statusBadge.innerText = "👍 절반의 성공, 약한 영역 1개 집중 (12~17)";
+            statusBadge.style.background = "#eab308"; // 노란색
+            statusBadge.style.color = "#1e293b";
+        } else {
+            statusBadge.innerText = "🌱 1가지부터 다시 시작 (~11)";
+            statusBadge.style.background = "#ef4444"; // 빨간색
+            statusBadge.style.color = "white";
+        }
+    }
+</script>
+
+</body>
+</html>
